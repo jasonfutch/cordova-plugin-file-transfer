@@ -438,6 +438,11 @@ public class FileTransfer extends CordovaPlugin {
                         conn.setFixedLengthStreamingMode(fixedLength);
                     }
 
+                     //fix for AWS S3 requiring 'Content-Length' header.
+                    if (fixedLength >= 0){
+                        conn.setRequestProperty("Content-Length", ""+fixedLength);
+                    }
+
                     conn.connect();
                     
                     OutputStream sendStream = null;
